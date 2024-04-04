@@ -90,19 +90,8 @@ DATABASES = {
         'ENGINE': 'mssql',
         'NAME': 'SANDBOX_BASE',
         'USER': 'SANDBOX',
-        'PASSWORD': 'EqEMCuBxaFwxxFVhk4Fj',
-        'HOST': 'host.copernicowms.com',
-        'PORT': '1433',
-        'OPTIONS': {
-                'driver': 'ODBC Driver 17 for SQL Server',
-        },
-    },
-    'S3': {
-        'ENGINE': 'mssql',
-        'NAME': 'CO_S3',
-        'USER': 'SANDBOX',
-        'PASSWORD': 'EqEMCuBxaFwxxFVhk4Fj',
-        'HOST': 'host.copernicowms.com',
+        'PASSWORD': 'abcdec',
+        'HOST': 'host.luisortega.com',
         'PORT': '1433',
         'OPTIONS': {
                 'driver': 'ODBC Driver 17 for SQL Server',
