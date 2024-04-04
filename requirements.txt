@@ -13,4 +13,3 @@ pytz==2022.1
 requests==2.31.0
 sqlparse==0.4.2
 typing-extensions==4.8.0
-dotenv == 0.0.5
