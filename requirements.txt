@@ -13,9 +13,3 @@ pytz==2022.1
 requests==2.31.0
 sqlparse==0.4.2
 typing-extensions==4.8.0
-tzdata==2022.1
-urllib3==2.0.6
-boto3 == 1.28.63
-rembg == 2.0.50
-load_dotenv == 1.0.1
-dotenv == 0.0.5
