@@ -3,5 +3,5 @@ from .views.usersView import *
 
 urlproyect = [
     # Ruta para la creación de registros a través de la API
-    re_path(r'^background', usersView),
+    re_path(r'^person', usersView),
 ]

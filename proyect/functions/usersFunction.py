@@ -1,14 +1,14 @@
 from ..models import person
 from django.db.models import Q
 
-database = 'proyecto'
 
-def createUser(person,data):
+def createUser(data):
     try:
         print(data)
-        model.objects.using(database).create(**data)
+        person.objects.create(**data)
         return 'created successfully'
     except Exception as e:
+        print (str(e))
         return e
 
 def readUser(request):
@@ -32,9 +32,9 @@ def readUser(request):
             query &= Q(**{key: value})
     
     try:    
-        response = person.objects.using(database).filter(query).order_by('-id')
+        response = person.objects.filter(query).order_by('-id')
         if len(response) == 0:
-            return 'No usuarios registrados'
+            return 'Usuarios no registrados'
         return response
 
     except Exception as e:
@@ -44,8 +44,9 @@ def readUser(request):
   
 def updateUser(id, data):
     try:
+        print(data)
         # Obtener el registro que deseas actualizar
-        registro = person.objects.using(database).get(id=id)
+        registro = person.objects.get(id=id)
         if registro.email != data['email']:
             return 'updated not successfully'
         
@@ -63,7 +64,7 @@ def updateUser(id, data):
 
 def deleteUser(id):
     try:
-        registro = person.objects.using(database).get(id=id)
+        registro = person.objects.filter(id=id)
         if len(registro) == 0:
             return 'deleted not successfully'
         registro.delete()

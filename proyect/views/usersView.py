@@ -11,6 +11,11 @@ load_dotenv()
 @csrf_exempt
 
 def usersView(request):
+    try:
+        print ('PERSON')
+        request_data = request.body.decode('utf-8')
+    except Exception as e:
+        return JsonResponse({'message': e}, safe=False, status=500)
     
     if request.method == 'GET':
         print ('GET')
@@ -29,48 +34,28 @@ def usersView(request):
             return JsonResponse({'message': e}, safe=False, status=500)
     if request.method == 'POST':
         try:
-            request_data = request._body    
-        except Exception as e:
-            return JsonResponse({'message': 'Error'}, safe=False, status=500)
-        try:
-            response = createUser(request_data)
+            data = json.loads(request_data)
+            response = createUser(data)
+            print(response)
             if response == 'created successfully':
                 return JsonResponse({'message': response}, safe=False, status=200)
+            return JsonResponse({'message': str(response)}, safe=False, status=400)
 
         except Exception as e:
             print(str(e))
             return JsonResponse({'message': e}, safe=False, status=500)
         
     if request.method == 'PUT':
-        try:
-            request_data = request._body    
-        except Exception as e:
-            return JsonResponse({'message': 'Error'}, safe=False, status=500)
-        
-        id = request_data['id'] if 'id' in request_data else None
-        data = request_data.pop('id')
-        database_id = request_data['database'] if 'database' in request_data else None
-        categoria = request_data['categoria'] if 'categoria' in request_data else None
-        codigo = request_data['codigo'] if 'codigo' in request_data else None
-        indicexcodigo = request_data['indicexcodigo'] if 'indicexcodigo' in request_data else None
-        hipervinculo =  request_data['hipervinculo'] if 'hipervinculo' in request_data else None
+        data = json.loads(request_data)
+        id = data['id'] if 'id' in data else None
+        data.pop('id')
 
-        data = {}
-        if database_id is not None:
-            data['database_id'] = database_id
-        if categoria is not None:
-            data['categoria'] = categoria
-        if codigo is not None:
-            data['codigo'] = codigo
-        if indicexcodigo is not None:
-            data['indicexcodigo'] = indicexcodigo
-        if hipervinculo is not None:
-            data['hipervinculo'] = hipervinculo
 
         try:
             response = updateUser(id,data)
             if response == 'updated successfully':
                 return JsonResponse({'message': response}, safe=False, status=200)
+            return JsonResponse({'message': response}, safe=False, status=400)
         except Exception as e:
             print(e)
             return JsonResponse({'message': e}, safe=False, status=500)
@@ -81,6 +66,7 @@ def usersView(request):
             response = deleteUser(id)
             if response == 'deleted successfully':
                 return JsonResponse({'message': response}, safe=False, status=200)
+            return JsonResponse({'message': str(response)}, safe=False, status=400)
         except Exception as e:
             print(e)
             return JsonResponse({'message': e}, safe=False, status=500)

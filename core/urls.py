@@ -19,5 +19,5 @@ from proyect.urls import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^s3/', include(urlproyect))
+    re_path(r'^proyecto/', include(urlproyect))
 ]
