@@ -4,9 +4,7 @@ from django.http.response import JsonResponse
 from proyect.functions.usersFunction import *
 import json
 from django.http import HttpResponse
-from dotenv import load_dotenv
 
-load_dotenv()
 
 @csrf_exempt
 
