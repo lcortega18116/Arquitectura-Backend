@@ -87,15 +87,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mssql',
-        'NAME': 'SANDBOX_BASE',
-        'USER': 'SANDBOX',
-        'PASSWORD': 'abcdec',
-        'HOST': 'host.luisortega.com',
-        'PORT': '1433',
-        'OPTIONS': {
-                'driver': 'ODBC Driver 17 for SQL Server',
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'luisortega_proyecto',
+        'USER': 'luisortega',
+        'PASSWORD': 'Luis5847*',
+        'HOST': 'postgresql-luisortega.alwaysdata.net',
+        'PORT': '5432',
     }
 }
 
