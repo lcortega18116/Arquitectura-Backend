@@ -1,11 +1,11 @@
-from ..models import person
+from ..models import Person
 from django.db.models import Q
 
 
 def createUser(data):
     try:
         print(data)
-        person.objects.create(**data)
+        Person.objects.create(**data)
         return 'created successfully'
     except Exception as e:
         print (str(e))
@@ -14,7 +14,7 @@ def createUser(data):
 def readUser(request):
 
     params = dict(request.GET)
-    fields = [field.name for field in person._meta.get_fields()]
+    fields = [field.name for field in Person._meta.get_fields()]
 
     # Check the fields 
     for p in params: 
@@ -32,7 +32,7 @@ def readUser(request):
             query &= Q(**{key: value})
     
     try:    
-        response = person.objects.filter(query).order_by('-id')
+        response = Person.objects.filter(query).order_by('-id')
         if len(response) == 0:
             return 'Usuarios no registrados'
         return response
@@ -46,7 +46,7 @@ def updateUser(id, data):
     try:
         print(data)
         # Obtener el registro que deseas actualizar
-        registro = person.objects.get(id=id)
+        registro = Person.objects.get(id=id)
         if registro.email != data['email']:
             return 'updated not successfully'
         
@@ -57,19 +57,19 @@ def updateUser(id, data):
         # Guardar los cambios en la base de datos
         registro.save()
         return 'updated successfully'
-    except person.DoesNotExist:
+    except Person.DoesNotExist:
         return 'item not found'
     except Exception as e:
         return str(e)
 
 def deleteUser(id):
     try:
-        registro = person.objects.filter(id=id)
+        registro = Person.objects.filter(id=id)
         if len(registro) == 0:
             return 'deleted not successfully'
         registro.delete()
         return 'deleted successfully'
-    except person.DoesNotExist:
+    except Person.DoesNotExist:
         return 'item not found'
     except Exception as e:
         return str(e)
