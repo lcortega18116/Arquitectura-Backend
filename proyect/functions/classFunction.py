@@ -1,20 +1,20 @@
-from ..models import Person
+from ..models import Class
 from django.db.models import Q
 
 
-def createUser(data):
+def createClass(data):
     try:
         print(data)
-        Person.objects.create(**data)
+        Class.objects.create(**data)
         return 'created successfully'
     except Exception as e:
         print (str(e))
         return e
 
-def readUser(request):
+def readClass(request):
 
     params = dict(request.GET)
-    fields = [field.name for field in Person._meta.get_fields()]
+    fields = [field.name for field in Class._meta.get_fields()]
 
     # Check the fields 
     for p in params: 
@@ -32,7 +32,7 @@ def readUser(request):
             query &= Q(**{key: value})
     
     try:    
-        response = Person.objects.filter(query).order_by('-id')
+        response = Class.objects.filter(query).order_by('-code')
         if len(response) == 0:
             return 'not found'
         return response
@@ -42,12 +42,12 @@ def readUser(request):
         return None
 
   
-def updateUser(id, data):
+def updateClass(code, data):
     try:
         print(data)
         # Obtener el registro que deseas actualizar
-        registro = Person.objects.get(id=id)
-        if registro.email != data['email']:
+        registro = Class.objects.get(code=code)
+        if registro.id_teacher != data['id_teacher']:
             return 'updated not successfully'
         
         # Actualizar los campos del registro con los valores proporcionados en el diccionario data
@@ -57,19 +57,19 @@ def updateUser(id, data):
         # Guardar los cambios en la base de datos
         registro.save()
         return 'updated successfully'
-    except Person.DoesNotExist:
+    except Class.DoesNotExist:
         return 'item not found'
     except Exception as e:
         return str(e)
 
-def deleteUser(id):
+def deleteClass(code):
     try:
-        registro = Person.objects.filter(id=id)
+        registro = Class.objects.filter(code=code)
         if len(registro) == 0:
             return 'deleted not successfully'
         registro.delete()
         return 'deleted successfully'
-    except Person.DoesNotExist:
+    except Class.DoesNotExist:
         return 'item not found'
     except Exception as e:
         return str(e)

@@ -1,16 +1,16 @@
 from django.views.decorators.csrf import csrf_exempt
 import os
 from django.http.response import JsonResponse
-from proyect.functions.usersFunction import *
+from proyect.functions.presencesFunction import *
 import json
 from django.http import HttpResponse
 
 
 @csrf_exempt
 
-def usersView(request):
+def presencesView(request):
     try:
-        print ('User')
+        print ('Presence')
         request_data = request.body.decode('utf-8')
     except Exception as e:
         return JsonResponse({'message': e}, safe=False, status=500)
@@ -19,7 +19,7 @@ def usersView(request):
         print ('GET')
 
         try:
-            response = readUser(request)
+            response = readPresence(request)
             if type(response) == str:
                 return JsonResponse({'message': response}, status=204)
             else:
@@ -33,7 +33,7 @@ def usersView(request):
     if request.method == 'POST':
         try:
             data = json.loads(request_data)
-            response = createUser(data)
+            response = createPresence(data)
             print(response)
             if response == 'created successfully':
                 return JsonResponse({'message': response}, safe=False, status=200)
@@ -50,7 +50,7 @@ def usersView(request):
 
 
         try:
-            response = updateUser(id,data)
+            response = updatePresence(id,data)
             if response == 'updated successfully':
                 return JsonResponse({'message': response}, safe=False, status=200)
             return JsonResponse({'message': response}, safe=False, status=400)
@@ -61,7 +61,7 @@ def usersView(request):
     if request.method == 'DELETE':
         id = request.GET.get('id', None)
         try:
-            response = deleteUser(id)
+            response = deletePresence(id)
             if response == 'deleted successfully':
                 return JsonResponse({'message': response}, safe=False, status=200)
             return JsonResponse({'message': str(response)}, safe=False, status=400)

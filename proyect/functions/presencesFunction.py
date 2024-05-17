@@ -1,20 +1,20 @@
-from ..models import Person
+from ..models import Presence
 from django.db.models import Q
 
 
-def createUser(data):
+def createPresence(data):
     try:
         print(data)
-        Person.objects.create(**data)
+        Presence.objects.create(**data)
         return 'created successfully'
     except Exception as e:
         print (str(e))
         return e
 
-def readUser(request):
+def readPresence(request):
 
     params = dict(request.GET)
-    fields = [field.name for field in Person._meta.get_fields()]
+    fields = [field.name for field in Presence._meta.get_fields()]
 
     # Check the fields 
     for p in params: 
@@ -32,7 +32,7 @@ def readUser(request):
             query &= Q(**{key: value})
     
     try:    
-        response = Person.objects.filter(query).order_by('-id')
+        response = Presence.objects.filter(query).order_by('-id')
         if len(response) == 0:
             return 'not found'
         return response
@@ -42,12 +42,14 @@ def readUser(request):
         return None
 
   
-def updateUser(id, data):
+def updatePresence(id, data):
     try:
         print(data)
         # Obtener el registro que deseas actualizar
-        registro = Person.objects.get(id=id)
-        if registro.email != data['email']:
+        registro = Presence.objects.get(id=id)
+        if registro.teacher_id != data['teacher_id']:
+            return 'updated not successfully'
+        if registro.student_id != data['student_id']:
             return 'updated not successfully'
         
         # Actualizar los campos del registro con los valores proporcionados en el diccionario data
@@ -57,19 +59,19 @@ def updateUser(id, data):
         # Guardar los cambios en la base de datos
         registro.save()
         return 'updated successfully'
-    except Person.DoesNotExist:
+    except Presence.DoesNotExist:
         return 'item not found'
     except Exception as e:
         return str(e)
 
-def deleteUser(id):
+def deletePresence(id):
     try:
-        registro = Person.objects.filter(id=id)
+        registro = Presence.objects.filter(id=id)
         if len(registro) == 0:
             return 'deleted not successfully'
         registro.delete()
         return 'deleted successfully'
-    except Person.DoesNotExist:
+    except Presence.DoesNotExist:
         return 'item not found'
     except Exception as e:
         return str(e)

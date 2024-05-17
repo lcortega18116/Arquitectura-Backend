@@ -18,7 +18,7 @@ class Person(models.Model):
 class Class(models.Model):
     code = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
-    id_teacher = models.ForeignKey('Person', models.DO_NOTHING, db_column='id_teacher')
+    id_teacher = models.IntegerField()
     start_date = models.DateField()
     finish_date = models.DateField()
     start_time = models.TimeField()
@@ -29,8 +29,9 @@ class Class(models.Model):
         db_table = 'class'
 
 class Grade(models.Model):
-    student_id = models.ForeignKey('Person', models.DO_NOTHING)
-    class_code = models.ForeignKey(Class, models.DO_NOTHING, db_column='class_code')
+    id = models.AutoField(primary_key=True)
+    student_id = models.IntegerField()
+    class_code = models.IntegerField()
     grade = models.DecimalField(max_digits=4, decimal_places=2)
     percent = models.DecimalField(max_digits=4, decimal_places=2)
 
@@ -39,10 +40,11 @@ class Grade(models.Model):
         db_table = 'grade'
 
 class Presence(models.Model):
-    class_code = models.ForeignKey(Class, models.DO_NOTHING, db_column='class_code')
-    student_id = models.ForeignKey(Person, models.DO_NOTHING)
+    class_code = models.IntegerField()
+    student_id = models.IntegerField()
+    teacher_id = models.IntegerField()
     register_date = models.DateTimeField()
-    teacher_id = models.ForeignKey(Person, models.DO_NOTHING, related_name='presence_teacher_set')
+    
 
     class Meta:
         managed = False
