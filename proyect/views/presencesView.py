@@ -24,7 +24,7 @@ def presencesView(request):
                 return JsonResponse({'message': response}, status=204)
             else:
                 if len(response) == 0:
-                    return JsonResponse({'message': 'No hay usuario registrado'}, safe=False, status=204) 
+                    return JsonResponse({'message': 'No hay asistencias registradas'}, safe=False, status=204) 
                 response_json = list(response.values())
                 return JsonResponse(response_json, safe=False, status=200)
         except Exception as e:

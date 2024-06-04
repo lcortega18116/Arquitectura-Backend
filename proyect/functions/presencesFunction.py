@@ -1,6 +1,6 @@
 from ..models import Presence
 from django.db.models import Q
-
+from datetime import datetime
 
 def createPresence(data):
     try:
